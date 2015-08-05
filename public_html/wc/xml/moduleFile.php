@@ -62,6 +62,10 @@ class Autopilot
         $result .= trim($temp);
         $result .= '" />"';
     }
+
+    function toEmptyXml() {
+        return '<Autopilot Ships="0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0" />';
+    }
 }
 
 class MissionNavigationPoint
