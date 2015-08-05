@@ -71,11 +71,12 @@ class Autopilot
 
 class MissionNavigationPoint
 {
+    private static $nrPoints = 16;
     private $navigationPoints;
 
     public function __construct()
     {
-        $this->navigationPoints = new SplFixedArray(16);
+        $this->navigationPoints = new SplFixedArray(MissionNavigationPoint::$nrPoints);
     }
 
     public function toXml()
@@ -88,7 +89,11 @@ class MissionNavigationPoint
 
     public static function toEmptyXml()
     {
-        return '<MissionNavigationPoint/>';
+        $result = '<MissionNavigationPoint>';
+        for ($idx = 0; $idx < MissionNavigationPoint::$nrPoints; $idx++) {
+            $result .= NavigationPoint::toEmptyXml();
+        }
+        $result .= '</MissionNavigationPoint>';
     }
 }
 
@@ -128,11 +133,12 @@ class NavigationPoint
 
 class MissionMapPoint
 {
+    private static $nrPoints = 16;
     private $mapPoints;
 
     public function __construct()
     {
-        $mapPoints = new SplFixedArray(16);
+        $mapPoints = new SplFixedArray(MissionMapPoint::$nrPoints);
     }
 
     public function getXml()
@@ -145,7 +151,11 @@ class MissionMapPoint
 
     public static function toEmptyXml()
     {
-        return '<MissionMapPoint/>';
+        $result = '<MissionMapPoint>';
+        for ($idx = 0; $idx < MissionMapPoint::$nrPoints; $idx++) {
+            $result .= MapPoint::toEmptyXml();
+        }
+        $result .= '</MissionMapPoint>';
     }
 }
 
@@ -173,11 +183,12 @@ class MapPoint
 
 class MissionShipPoint
 {
+    private static $nrPoints = 32;
     private $shipPoints;
 
     public function __construct()
     {
-        $shipPoints = new SplFixedArray(32);
+        $shipPoints = new SplFixedArray(MissionShipPoint::$nrPoints);
     }
 
     public function toXml()
@@ -190,7 +201,11 @@ class MissionShipPoint
 
     public static function toEmptyXml()
     {
-        return '<MissionShipPoint/>';
+        $result = '<MissionShipPoint>';
+        for ($idx = 0; $idx < MissionShipPoint::$nrPoints; $idx++) {
+            $result .= ShipPoint::toEmptyXml();
+        }
+        $result .= '</MissionShipPointMapPoint>';
     }
 }
 
@@ -225,7 +240,7 @@ class ShipPoint
         return "<ShipPoint ClassIndex=\"$this->classIndex\" Allegiance=\"$this->allegiance\" LeadShipIndex=\"$this->leadShipIndex\" OrdersIndex=\"$this->ordersIndex\" Location=\"$this->locationX,$this->locationY,$this->locationZ\" Orientation=\"$this->orientationX,$this->orientationY,$this->orientationZ\" Speed=\"$this->speed\" Size=\"$this->size\" PilotCharacteristicsIndex=\"$this->pilotCharacteristicsIndex\" FormationIndex=\"$this->formationIndex\" FormationPositionNumber=\"$this->formationPositionNumber\" PrimaryTargetShipIndex=\"$this->primaryTargetShipIndex\" SecondaryTargetShipIndex=\"$this->secondaryTargetShipIndex\" Unknown1=\"$this->unknown1\" Unknown2=\"$this->unknown2\" Unknown3=\"$this->unknown3\" Unknown4=\"$this->unknown4\" Unknown5=\"$this->unknown5\" Unknown6=\"$this->unknown6\" />";
     }
 
-    public static function getEmptyXml()
+    public static function toEmptyXml()
     {
         return '<ShipPoint ClassIndex="-1" Allegiance="0" LeadShipIndex="-1" OrdersIndex="0" Location="0,0,0" Orientation="0,0,0" Speed="0" Size="0" PilotCharacteristicsIndex="0" FormationIndex="0" FormationPositionNumber="0" PrimaryTargetShipIndex="0" SecondaryTargetShipIndex="-1" Unknown1="0" Unknown2="0" Unknown3="0" Unknown4="0" Unknown5="0" Unknown6="0" />';
     }
