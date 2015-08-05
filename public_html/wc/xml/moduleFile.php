@@ -94,6 +94,7 @@ class MissionNavigationPoint
             $result .= NavigationPoint::toEmptyXml();
         }
         $result .= '</MissionNavigationPoint>';
+        return $result;
     }
 }
 
@@ -156,6 +157,7 @@ class MissionMapPoint
             $result .= MapPoint::toEmptyXml();
         }
         $result .= '</MissionMapPoint>';
+        return $result;
     }
 }
 
@@ -206,6 +208,7 @@ class MissionShipPoint
             $result .= ShipPoint::toEmptyXml();
         }
         $result .= '</MissionShipPointMapPoint>';
+        return $result;
     }
 }
 
