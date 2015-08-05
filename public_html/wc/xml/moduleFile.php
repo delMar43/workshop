@@ -19,20 +19,20 @@ class ModuleFile
         $this->systemNames = new SplFixedArray(16);
     }
 
-    function toXml()
+    public function toXml()
     {
         $result = "<ModuleFile><AutopilotBlock>";
-        $result .= appIt($this->autopilots);
+        $result .= appIt($this->autopilots, 'Autopilot');
         $result .= "</AutopilotBlock><MissionNavigationPointBlock>";
-        $result .= appIt($this->missionNavigationPoints);
+        $result .= appIt($this->missionNavigationPoints, 'MissionNavigationPoint');
         $result .= "</MissionNavigationPointBlock><MissionMapPointBlock>";
-        $result .= appIt($this->missionMapPoints);
+        $result .= appIt($this->missionMapPoints, 'MissionMapPoint');
         $result .= "</MissionMapPointBlock><MissionShipPointBlock>";
-        $result .= appIt($this->missionShipPoints);
+        $result .= appIt($this->missionShipPoints, 'MissionShipPoint');
         $result .= "</MissionShipPointBlock><WingNameBlock>";
-        $result .= appIt($this->wingNames);
+        $result .= appIt($this->wingNames, 'WingName');
         $result .= "</WingNameBlock><SystemNameBlock>";
-        $result .= appIt($this->systemNames);
+        $result .= appIt($this->systemNames, 'SystemName');
         $result .= "</SystemNameBlock></ModuleFile>";
         return $result;
     }
@@ -47,12 +47,12 @@ class Autopilot
         $this->ships = new SplFixedArray(12);
     }
 
-    function addShip($index, $value)
+    public function addShip($index, $value)
     {
         $this->ships[$index] = $value;
     }
 
-    function toXml()
+    public function toXml()
     {
         $result = '<Autopilot Ships="';
         $temp = '';
@@ -63,23 +63,32 @@ class Autopilot
         $result .= '" />"';
     }
 
-    function toEmptyXml() {
+    public static function toEmptyXml()
+    {
         return '<Autopilot Ships="0 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 0" />';
     }
 }
 
 class MissionNavigationPoint
 {
-    private $navigationPoint;
+    private $navigationPoints;
 
     public function __construct()
     {
-        $this->navigationPoint = new SplFixedArray(16);
+        $this->navigationPoints = new SplFixedArray(16);
     }
 
     public function toXml()
     {
+        $result = "<MissionNavigationPoint>";
+        $result .= appIt($this->navigationPoints, 'NavigationPoint');
+        $result .= "</MissionNavigationPoint>";
+        return $result;
+    }
 
+    public static function toEmptyXml()
+    {
+        return '<MissionNavigationPoint/>';
     }
 }
 
@@ -108,7 +117,12 @@ class NavigationPoint
 
     public function toXml()
     {
+        return "<NavigationPoint Name=\"$this->name\" Format=\"$this->format\" Point=\"$this->pointX,$this->pointY,$this->pointZ\" Radius=\"$this->radius\" ShipClasses=\"$this->shipClasses\" Ships=\"$this->ships\" />";
+    }
 
+    public static function toEmptyXml()
+    {
+        return '<NavigationPoint Name="" Format="0" Point="0,0,0" Radius="0" ShipClasses="-1 -1" Ships="-1 -1 -1 -1 -1 -1 -1 -1 -1 -1" />';
     }
 }
 
@@ -119,6 +133,19 @@ class MissionMapPoint
     public function __construct()
     {
         $mapPoints = new SplFixedArray(16);
+    }
+
+    public function getXml()
+    {
+        $result = "<MissionMapPoint>";
+        $result .= appIt($this->mapPoints, 'MapPoint');
+        $result .= "</MissionMapPoint>";
+        return $result;
+    }
+
+    public static function toEmptyXml()
+    {
+        return '<MissionMapPoint/>';
     }
 }
 
@@ -135,7 +162,12 @@ class MapPoint
 
     public function toXml()
     {
+        return "<MapPoint Format=\"$this->format\" TargetIndex=\"$this->targetIndex\" />";
+    }
 
+    public static function toEmptyXml()
+    {
+        return '<MapPoint Format="-1" TargetIndex="0" />';
     }
 }
 
@@ -150,7 +182,15 @@ class MissionShipPoint
 
     public function toXml()
     {
+        $result = "<MissionShipPoint>";
+        $result .= appIt($this->shipPoints, 'ShipPoint');
+        $result .= "</MissionShipPoint>";
+        return $result;
+    }
 
+    public static function toEmptyXml()
+    {
+        return '<MissionShipPoint/>';
     }
 }
 
@@ -160,8 +200,12 @@ class ShipPoint
     private $allegiance;
     private $leadShipIndex;
     private $ordersIndex;
-    private $location;
-    private $orientation;
+    private $locationX;
+    private $locationY;
+    private $locationZ;
+    private $orientationX;
+    private $orientationY;
+    private $orientationZ;
     private $speed;
     private $size;
     private $pilotCharacteristicsIndex;
@@ -178,6 +222,41 @@ class ShipPoint
 
     public function toXml()
     {
+        return "<ShipPoint ClassIndex=\"$this->classIndex\" Allegiance=\"$this->allegiance\" LeadShipIndex=\"$this->leadShipIndex\" OrdersIndex=\"$this->ordersIndex\" Location=\"$this->locationX,$this->locationY,$this->locationZ\" Orientation=\"$this->orientationX,$this->orientationY,$this->orientationZ\" Speed=\"$this->speed\" Size=\"$this->size\" PilotCharacteristicsIndex=\"$this->pilotCharacteristicsIndex\" FormationIndex=\"$this->formationIndex\" FormationPositionNumber=\"$this->formationPositionNumber\" PrimaryTargetShipIndex=\"$this->primaryTargetShipIndex\" SecondaryTargetShipIndex=\"$this->secondaryTargetShipIndex\" Unknown1=\"$this->unknown1\" Unknown2=\"$this->unknown2\" Unknown3=\"$this->unknown3\" Unknown4=\"$this->unknown4\" Unknown5=\"$this->unknown5\" Unknown6=\"$this->unknown6\" />";
+    }
 
+    public static function getEmptyXml()
+    {
+        return '<ShipPoint ClassIndex="-1" Allegiance="0" LeadShipIndex="-1" OrdersIndex="0" Location="0,0,0" Orientation="0,0,0" Speed="0" Size="0" PilotCharacteristicsIndex="0" FormationIndex="0" FormationPositionNumber="0" PrimaryTargetShipIndex="0" SecondaryTargetShipIndex="-1" Unknown1="0" Unknown2="0" Unknown3="0" Unknown4="0" Unknown5="0" Unknown6="0" />';
+    }
+}
+
+class WingName
+{
+    private $value;
+
+    public function toXml()
+    {
+        return "<WingName>$this->value</WingName>";
+    }
+
+    public static function toEmptyXml()
+    {
+        return '<WingName />';
+    }
+}
+
+class SystemName
+{
+    private $value;
+
+    public function toXml()
+    {
+        return "<SystemName>$this->value</SystemName>";
+    }
+
+    public static function toEmptyXml()
+    {
+        return '<SystemName />';
     }
 }
