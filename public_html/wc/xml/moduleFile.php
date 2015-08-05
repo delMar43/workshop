@@ -71,11 +71,12 @@ class Autopilot
 
 class MissionNavigationPoint
 {
+    private static $nrPoints = 16;
     private $navigationPoints;
 
     public function __construct()
     {
-        $this->navigationPoints = new SplFixedArray(16);
+        $this->navigationPoints = new SplFixedArray(MissionNavigationPoint::$nrPoints);
     }
 
     public function toXml()
@@ -88,7 +89,11 @@ class MissionNavigationPoint
 
     public static function toEmptyXml()
     {
-        return '<MissionNavigationPoint/>';
+        $result = '<MissionNavigationPoint>';
+        for ($idx = 0; $idx < MissionNavigationPoint::$nrPoints; $idx++) {
+            $result .= NavigationPoint::toEmptyXml();
+        }
+        $result .= '</MissionNavigationPoint>';
     }
 }
 
@@ -128,11 +133,12 @@ class NavigationPoint
 
 class MissionMapPoint
 {
+    private static $nrPoints = 16;
     private $mapPoints;
 
     public function __construct()
     {
-        $mapPoints = new SplFixedArray(16);
+        $mapPoints = new SplFixedArray(MissionMapPoint::$nrPoints);
     }
 
     public function getXml()
@@ -145,7 +151,11 @@ class MissionMapPoint
 
     public static function toEmptyXml()
     {
-        return '<MissionMapPoint/>';
+        $result = '<MissionMapPoint>';
+        for ($idx = 0; $idx < MissionMapPoint::$nrPoints; $idx++) {
+            $result .= MapPoint::toEmptyXml();
+        }
+        $result .= '</MissionMapPoint>';
     }
 }
 
@@ -173,11 +183,12 @@ class MapPoint
 
 class MissionShipPoint
 {
+    private static $nrPoints = 32;
     private $shipPoints;
 
     public function __construct()
     {
-        $shipPoints = new SplFixedArray(32);
+        $shipPoints = new SplFixedArray(MissionShipPoint::$nrPoints);
     }
 
     public function toXml()
@@ -190,7 +201,11 @@ class MissionShipPoint
 
     public static function toEmptyXml()
     {
-        return '<MissionShipPoint/>';
+        $result = '<MissionShipPoint>';
+        for ($idx = 0; $idx < MissionShipPoint::$nrPoints; $idx++) {
+            $result .= ShipPoint::toEmptyXml();
+        }
+        $result .= '</MissionShipPointMapPoint>';
     }
 }
 
