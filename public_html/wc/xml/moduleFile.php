@@ -207,7 +207,7 @@ class MissionShipPoint
         for ($idx = 0; $idx < MissionShipPoint::$nrPoints; $idx++) {
             $result .= ShipPoint::toEmptyXml();
         }
-        $result .= '</MissionShipPointMapPoint>';
+        $result .= '</MissionShipPoint>';
         return $result;
     }
 }
