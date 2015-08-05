@@ -95,11 +95,6 @@ class MissionConversationBlock
 
     public static function toEmptyXml()
     {
-        $result = '<MissionConversationBlock>';
-        for ($idx = 0; $idx < MissionConversationBlock::$nrConversations; $idx++) {
-            $result .= Conversation::toEmptyXml();
-        }
-        $result .= '</MissionConversationBlock>';
-        return $result;
+        return '<MissionConversationBlock/>';
     }
 }
