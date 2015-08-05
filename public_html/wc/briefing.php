@@ -1,46 +1,12 @@
 <?php
+include '../tools.php';
+include 'xml/briefingFile.php';
 
-class BriefingFile
-{
-    private $funeralConversations;
-    private $officeConversation;
-    private $ceremonyConversation;
-    private $missionConversationBlocks;
+$briefingFile = new BriefingFile();
 
-    public function toXml()
-    {
-        $this->funeralConversations = new SplFixedArray(7);
-        $this->missionConversationBlocks = new SplFixedArray(52);
-    }
-}
+$briefingXml = $briefingFile->toXml();
+$xml = new SimpleXMLElement('<?xml version="1.0" encoding="us-ascii"?>' . $briefingXml);
 
-class Conversation
-{
-    private $backgroundImageIndex;
-    private $foregroundImageIndex;
-    private $textColorIndex;
-    private $delay;
-    private $commands;
-    private $facialExpressions;
-    private $libSyncText;
-    private $text;
+header("Content-type: text/xml; charset=utf-8");
 
-    public function toXml()
-    {
-        $result = "<DialogSetting BackgroundImageIndex=\"$this->backgroundImageIndex\" ForegroundImageIndex=\"$this->foregroundImageIndex\" TextColorIndex=\"$this->textColorIndex\" Delay=\"$this->delay\" />";
-        $result .= "<Dialog Commands=\"$this->commands\" FacialExpressions=\"$this->facialExpressions\" LipSyncText=\"$this->libSyncText\">$this->text</Dialog>";
-        return $result;
-    }
-}
-
-class MissionConversationBlock
-{
-    private $conversations;
-
-    public function __construct()
-    {
-        $this->conversations = new SplFixedArray(5);
-    }
-
-
-}
+echo $xml->asXml();
