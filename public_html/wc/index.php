@@ -69,6 +69,7 @@
         $('#layout').w2layout(config.layout);
         w2ui.layout.content('left', $().w2sidebar(config.sidebar));
 
+        $('#authInfo').load('../authStatus.php');
 
     });
 </script>

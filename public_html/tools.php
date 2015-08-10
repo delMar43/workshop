@@ -11,3 +11,12 @@ function appIt($theArray, $classname) {
     }
     return $result;
 }
+
+function logoutButton()
+{
+    if (isset($_SESSION['__user_name__'])) {
+        return "<button onclick=\"$(this).load('logout.php')\">Logout " . $_SESSION['__user_name__'] . "</button>";
+    } else {
+        return "Logout";
+    }
+}
